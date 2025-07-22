@@ -1,0 +1,73 @@
+import { useEffect, useState } from "react";
+import axiosClient from "../utils/axiosClient";
+
+
+           
+function DataTable({apiChange}) {
+
+    console.log();
+    
+    const [tasks, setTasks] = useState([]);
+
+
+    useEffect(() => {
+        async function fetchTask() {
+            const { data } = await axiosClient.get('/getalltask')
+            setTasks(data);
+        }
+
+        fetchTask()
+    }, [apiChange])
+
+    const handleDelete = async (_id) => {
+        try {
+            await axiosClient.delete(`/delete/${_id}`);
+            alert('Task deleted sucessfully')
+            setTasks(tasks.filter(item => item._id !== _id))
+
+        }
+        catch (err) {
+            console.log('Error: ', err);
+
+        }
+    }
+
+
+    return (
+        <>
+            {
+                tasks.length !== 0 ?
+                    <div className="mt-10 w-4xl mx-auto h-100  rounded-2xl overflow-auto shadow-xl">
+                        <div className="   flex justify-center items-center  rounded-2xl   ">
+                            {/* <div> */}
+
+                            <table className="table table-zebra">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Task</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        tasks?.map((item, index) => (
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td><p className="w-150 overflow-auto">{item?.message}</p></td>
+                                                <td><button className="btn btn-primary">update</button> <button className="btn btn-secondary" type="button" onClick={() => handleDelete(item?._id)}>delete</button></td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
+                            {/* </div> */}
+                        </div>
+                    </div>
+                    : ''
+            }
+        </>
+    )
+}
+
+export default DataTable;
