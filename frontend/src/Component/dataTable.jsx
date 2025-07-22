@@ -12,7 +12,7 @@ function DataTable({apiChange}) {
 
     useEffect(() => {
         async function fetchTask() {
-            const { data } = await axiosClient.get('/getalltask')
+            const { data } = await axiosClient.get('/getalltask');
             setTasks(data);
         }
 
@@ -22,8 +22,8 @@ function DataTable({apiChange}) {
     const handleDelete = async (_id) => {
         try {
             await axiosClient.delete(`/delete/${_id}`);
-            alert('Task deleted sucessfully')
-            setTasks(tasks.filter(item => item._id !== _id))
+            alert('Task deleted sucessfully');
+            setTasks(tasks.filter(item => item._id !== _id));
 
         }
         catch (err) {
