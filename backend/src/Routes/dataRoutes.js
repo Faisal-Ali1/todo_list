@@ -4,17 +4,6 @@ const data = require('../Modals/dataSchema')
 const dataRouter = express.Router();
 
 
-// fetching all tasks
-dataRouter.get('/getalltask', async (req, res) => {
-
-    try {
-        const allTask = await data.find({});
-        res.status(200).send(allTask);
-    }
-    catch (err) {
-        res.status(400).send('Error: ', err.message)
-    }
-})
 
 // creating task
 dataRouter.post('/create', async (req, res) => {
@@ -29,18 +18,51 @@ dataRouter.post('/create', async (req, res) => {
 
 })
 
+// fetching all tasks
+dataRouter.get('/getalltask', async (req, res) => {
+
+    try {
+        const allTask = await data.find({});
+        res.status(200).send(allTask);
+    }
+    catch (err) {
+        res.status(400).send('Error: ', err.message)
+    }
+})
+
+// fetching single task
+dataRouter.get('/getsingletask/:id' , async(req , res) => {
+    try{
+
+        const { id} = req.params
+       const singleTask = await data.findById(id);
+       res.status(200).send(singleTask);
+    }
+    catch(err){
+        console.log('Error: ' , err.message);
+        
+    }
+})
+
 // updating tast
 dataRouter.patch('/update/:id', async (req, res) => {
 
-    if (!req.body)
+    try{
+       
+        if (!req.body)
         return res.status(400).send('enter task for updation');
 
     const { id } = req.params;
-    let message = req.body;
+    const {message} = req.body;
+    
+    await data.findByIdAndUpdate(id, {message});
 
-    data.findByIdAndUpdate({ _id: id }, message);
-
-    res.status(200).send('Task updated sucessfully')
+    res.status(200).send('Task updated sucessfully');
+    }
+    catch(err){
+        console.log('Error: ' , err);
+        
+    }
 })
 
 // deleting task

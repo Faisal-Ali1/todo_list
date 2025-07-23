@@ -5,18 +5,18 @@ import axiosClient from "./utils/axiosClient";
 function App() {
 
   const [message, setMessage] = useState('');
-  // const [ apiChange , setApiChange] = useState(false);
-
+  const [ isData , setIsData ] = useState(false);
+  // console.log(isData);
   const handleSubmit = async () => {
     try {
+      
       if(!message)
         return alert('Enter task first');
-
-      // setApiChange(!apiChange);
 
       await axiosClient.post('/create', { message });
       alert('Task added');
       setMessage('')
+      setIsData(!isData);
     }
     catch (err) {
       console.log('Error: ', err);
@@ -41,7 +41,7 @@ function App() {
 
           {/* showing data */}
           <div>
-            <DataTable />
+            <DataTable data={isData}/>
           </div>
         </div>
       </div>
