@@ -6,7 +6,8 @@ function App() {
 
   const [message, setMessage] = useState('');
   const [ isData , setIsData ] = useState(false);
-  // console.log(isData);
+  
+// inserting task in db
   const handleSubmit = async () => {
     try {
       
@@ -14,7 +15,7 @@ function App() {
         return alert('Enter task first');
 
       await axiosClient.post('/create', { message });
-      alert('Task added');
+      // alert('Task added');
       setMessage('')
       setIsData(!isData);
     }

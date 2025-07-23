@@ -9,12 +9,13 @@ function DataTable({data}) {
 
     const [tasks, setTasks] = useState([]);
     const [ updateTask , setUpdateTask ] = useState('');
+    const [isChange , setIsChange] = useState(false);
     
     
     // fetching all tasks
     useEffect(() => {
 
-        console.log('data: ' ,data);
+        // console.log('data: ' ,data);
         
         async function fetchTask() {
             const { data } = await axiosClient.get('/getalltask');
@@ -22,7 +23,7 @@ function DataTable({data}) {
         }
 
         fetchTask()
-    }, [data])
+    }, [data , isChange])
 
     // handling Delete button
     const handleDelete = async (_id) => {
@@ -41,7 +42,7 @@ function DataTable({data}) {
     const handleUpdate = async(id) => {
             try{
                 let { data } = await axiosClient.get(`/getsingletask/${id}`)
-                console.log(data);
+                // console.log(data);
 
                 setUpdateTask(data);
                 
@@ -57,6 +58,7 @@ function DataTable({data}) {
         try{
             await axiosClient.patch(`/update/${id}` , {message: updateTask.message});
             setUpdateTask('');
+            setIsChange(!isChange);
         }
         catch(err){
             console.log('Error: ' , err.message);
@@ -69,7 +71,7 @@ function DataTable({data}) {
         <>
             {
                 tasks.length !== 0 ?
-                    <div className="mt-10 w-4xl mx-auto h-100  rounded-2xl overflow-auto shadow-xl relative border">
+                    <div className="mt-10 w-4xl mx-auto h-100  rounded-2xl overflow-auto shadow-xl relative ">
                         <div className="   flex justify-center items-center  rounded-2xl">
                             {/* <div> */}
 
