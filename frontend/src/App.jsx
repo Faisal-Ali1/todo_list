@@ -12,7 +12,7 @@ function App() {
       if(!message)
         return alert('Enter task first');
 
-      setApiChange(!apiChange);
+      // setApiChange(!apiChange);
 
       await axiosClient.post('/create', { message });
       alert('Task added');

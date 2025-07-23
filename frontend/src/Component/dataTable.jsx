@@ -3,7 +3,7 @@ import axiosClient from "../utils/axiosClient";
 
 
            
-function DataTable({apiChange}) {
+function DataTable() {
 
     console.log();
     
@@ -17,7 +17,7 @@ function DataTable({apiChange}) {
         }
 
         fetchTask()
-    }, [apiChange])
+    }, [])
 
     const handleDelete = async (_id) => {
         try {

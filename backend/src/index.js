@@ -3,6 +3,7 @@ const main = require('./config/db');
 const data = require('./Modals/dataSchema')
 const dataRouter = require('./Routes/dataRoutes')
 const cors = require('cors');
+require('dotenv').config({quiet: true})
 
 
 const app = express();
