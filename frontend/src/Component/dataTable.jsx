@@ -9,7 +9,7 @@ function DataTable() {
     
     const [tasks, setTasks] = useState([]);
 
-
+// fetching all tasks
     useEffect(() => {
         async function fetchTask() {
             const { data } = await axiosClient.get('/getalltask');
@@ -19,6 +19,7 @@ function DataTable() {
         fetchTask()
     }, [])
 
+    // handling delete button
     const handleDelete = async (_id) => {
         try {
             await axiosClient.delete(`/delete/${_id}`);
@@ -55,7 +56,12 @@ function DataTable() {
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
                                                 <td><p className="w-150 overflow-auto">{item?.message}</p></td>
-                                                <td><button className="btn btn-primary">update</button> <button className="btn btn-secondary" type="button" onClick={() => handleDelete(item?._id)}>delete</button></td>
+
+                                                {/* update button */}
+                                                <td><button className="btn btn-primary" onClick={()=> handleUpdate(item?._id)}>update</button> 
+
+                                                {/* delete button */}
+                                                <button className="btn btn-secondary" type="button" onClick={() => handleDelete(item?._id)}>delete</button></td>
                                             </tr>
                                         ))
                                     }
